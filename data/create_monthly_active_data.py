@@ -23,6 +23,10 @@ def extract_active_count(filePath):
     others = 0
     total = 0
     bad_line_count = 0
+    consumption = 0
+    meters = dict()
+    accounts = dict()
+
     with open(filePath) as reader:
         for index, l in enumerate(reader):
             data = l.split()
@@ -31,7 +35,21 @@ def extract_active_count(filePath):
                 bad_line_count = bad_line_count + 1
                 continue
             status = data[0].upper()
+            account = data[1]
+            if account not in accounts:
+                accounts[account] = 0
+            accounts[account] = accounts[account] + 1
 
+            feature_count = len(data)
+            meter_index = feature_count - 6
+            meter = data[meter_index]
+            if meter not in meters:
+                meters[meter] = 0
+
+            meters[meter] = meters[meter] + 1
+
+            consumption_index = feature_count-4
+            current_consumption = float(data[consumption_index])
             if status == 'I':
                 inactive = inactive + 1
             elif status == 'A':
@@ -42,17 +60,18 @@ def extract_active_count(filePath):
                 others = others + 1
 
             total = total + 1
+            consumption = consumption + current_consumption
         print(filePath, ";Bad line count:", bad_line_count)
-    return active, inactive, fstatus, others, total
+    return len(accounts), len(meters), active, inactive, fstatus, others, total, consumption
 
 with open("monthly_active.csv", "w", newline='') as csvfile:
     my_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    my_writer.writerow(["month", "active", "inactive", "fstatus", "other", "total"])
+    my_writer.writerow(["month", "account", "meter", "active", "inactive", "fstatus", "other", "total_reading", "consumption"])
 
     for m, filePath in data_month.items():
-        active, inactive, fstatus, others, total = extract_active_count(filePath='../confi_data/' + filePath)
+        account_count, meter_count, active, inactive, fstatus, others, total, consumption = extract_active_count(filePath='../confi_data/' + filePath)
         verified = False
-        my_writer.writerow([m, active, inactive, fstatus, others, total])
+        my_writer.writerow([m, account_count, meter_count, active, inactive, fstatus, others, total, consumption])
         if total != (active + inactive + fstatus + others):
             print("not verified:", m, "; file:", filePath)
 
