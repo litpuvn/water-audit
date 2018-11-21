@@ -38,6 +38,8 @@ def extract_active_count(filePath):
             account = data[1]
             if account not in accounts:
                 accounts[account] = 0
+            else:
+                print("accoount overlapped", account)
             accounts[account] = accounts[account] + 1
 
             feature_count = len(data)
@@ -45,6 +47,9 @@ def extract_active_count(filePath):
             meter = data[meter_index]
             if meter not in meters:
                 meters[meter] = 0
+            # else:
+            #     print("meter number overlapped:", meter)
+
 
             meters[meter] = meters[meter] + 1
 
@@ -61,8 +66,16 @@ def extract_active_count(filePath):
 
             total = total + 1
             consumption = consumption + current_consumption
-        print(filePath, ";Bad line count:", bad_line_count)
+        # print(filePath, ";Bad line count:", bad_line_count)
     return len(accounts), len(meters), active, inactive, fstatus, others, total, consumption
+
+# for m, filePath in data_month.items():
+#     account_count, meter_count, active, inactive, fstatus, others, total, consumption = extract_active_count(filePath='../confi_data/' + filePath)
+#     verified = False
+#     if total != (active + inactive + fstatus + others):
+#         print("not verified:", m, "; file:", filePath)
+#     # break
+
 
 with open("monthly_active.csv", "w", newline='') as csvfile:
     my_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
