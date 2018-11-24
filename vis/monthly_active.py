@@ -35,7 +35,7 @@ rects3 = ax.bar(index + 2*bar_width, fstatus_counts, bar_width,
 
 ax.set_xlabel('Month')
 ax.set_ylabel('Count')
-ax.set_title('Status count by month')
+ax.set_title('Account status by month')
 ax.set_xticks(index + bar_width / 2)
 ax.set_xticklabels(months)
 ax.legend()
