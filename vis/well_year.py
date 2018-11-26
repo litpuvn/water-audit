@@ -24,6 +24,6 @@ y_pos = np.arange(well_count)
 plt.bar(y_pos, cum_pump, align='center', alpha=0.5)
 plt.xticks(y_pos, wells_label)
 plt.ylabel('Pumped water')
-plt.title('Well water pumped in one year')
+plt.title('Well water pumped in one year 2018')
 
 plt.show()
