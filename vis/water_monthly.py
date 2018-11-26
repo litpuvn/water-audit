@@ -23,6 +23,6 @@ y_pos = np.arange(month_count)
 plt.bar(y_pos, cumulative_months, align='center', alpha=0.5)
 plt.xticks(y_pos, months_label)
 plt.ylabel('Pumped water')
-plt.title('Well water pumped in one year')
+plt.title('Well water pumped in one year 2018')
 
 plt.show()
