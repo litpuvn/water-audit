@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.pylab import plt #load plot library
 
 
-df = pd.read_csv("../data/well_monthly.csv", header=0)
+df = pd.read_csv("../data/well_monthly_2017.csv", header=0)
 
 cum_pump = []
 wells_label = []
@@ -24,6 +24,6 @@ y_pos = np.arange(well_count)
 plt.bar(y_pos, cum_pump, align='center', alpha=0.5)
 plt.xticks(y_pos, wells_label)
 plt.ylabel('Pumped water')
-plt.title('Well water pumped in one year 2018')
+plt.title('Well water pumped in one year 2017')
 
 plt.show()
