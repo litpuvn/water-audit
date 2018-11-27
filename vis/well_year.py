@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.pylab import plt #load plot library
 
 
-df = pd.read_csv("../data/well_monthly_2017.csv", header=0)
+df = pd.read_csv("../data/well_monthly.csv", header=0)
 
 cum_pump = []
 wells_label = []
@@ -12,7 +12,8 @@ for well_i in range(1, 18):
     data_i.drop(columns=["month", "well"], inplace=True)
 
     data = data_i.values.flatten()
-    my_cumulative_pump = sum(data[0:len(data)-1])
+    effective = data[0:len(data)-1]
+    my_cumulative_pump = sum(effective)
     cum_pump.append(my_cumulative_pump)
     print("well:", well_i, "; pump:", my_cumulative_pump)
 
@@ -26,4 +27,5 @@ plt.xticks(y_pos, wells_label)
 plt.ylabel('Pumped water')
 plt.title('Well water pumped in one year 2017')
 
+print("Total water usage:", sum(cum_pump))
 plt.show()
