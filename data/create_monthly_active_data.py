@@ -55,6 +55,10 @@ def extract_active_count(filePath):
 
             consumption_index = feature_count-4
             current_consumption = float(data[consumption_index])
+
+            if current_consumption > 300:
+                current_consumption = 0
+
             if status == 'I':
                 inactive = inactive + 1
             elif status == 'A':
